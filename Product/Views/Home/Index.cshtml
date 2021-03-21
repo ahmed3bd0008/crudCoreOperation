@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@*@inject CreateProduct product*@
+@model List<Product>
+@{ 
+    ViewBag.product = new CreateProduct();
+}
+<div class="container">
+    <form enctype="multipart/form-data" asp-action="Create" asp-controller="Home" method="post">
+        <fieldset>
+            <legend>Add Product</legend>
+            <div class="form-group">
+                <label name="ProductName">Email address</label>
+                <input name="ProductName"class="form-control">
+            </div>
+            <div class="form-group">
+                <label name="ProductDataTime">Email address</label>
+                <input name="ProductDataTime" class="form-control " type="date">
+            </div>
+            <div class="form-group">
+                <label name="PhotoPath">Email address</label>
+                <input name="PhotoPath" class="form-control"  type="file">
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </fieldset>
+    </form>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Column heading</th>
+                <th scope="col">Column heading</th>
+                <th scope="col">Column heading</th>
+                <th scope="col">Edit culom</th>
+                <th scope="col">Delete culom</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <th scope="row">Default</th>
+                <td>@item.ProductName</td>
+                <td>@item.ProductDataTime</td>
+                <td><img src="~/Image/@item.PhotoPath" class="rounded float-left" style="width:200px;" /> </td>
+                
+                <td>
+                    <form method="post">
+                        <input class="btn btn-warning" value="Edit" type="submit"  asp-controller="Home" asp-action="Edit" asp-route-ProductId="@item.Id"/>
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="Home" asp-action="Delete" asp-route-ProductId="@item.Id">
+                        <input class="btn btn-warning" value="Delete" type="submit"/>
+                    </form>
+                </td>
+
+            </tr>
+            }
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</div>

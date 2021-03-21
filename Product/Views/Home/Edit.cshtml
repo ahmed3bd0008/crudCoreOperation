@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Edit Product";
+}
+@*@inject CreateProduct product*@
+@model CreateProduct 
+@{
+   
+}
+<div class="container">
+    <form enctype="multipart/form-data"  method="post">
+        <fieldset>
+            <legend>Add Product</legend>
+            <div class="form-group">
+                <label asp-for="@Model.ProductName" name="ProductName" >Email address </label>
+                <input name="ProductName" class="form-control" value="@ViewBag.product.ProductName">
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ProductDataTime" name="ProductDataTime">Email address</label>
+                <input asp-for="@Model.ProductDataTime" name="ProductDataTime" class="form-control " type="date" value="@ViewBag.product.ProductDataTime">
+            </div>
+            <div class="form-group">
+                <label name="PhotoPath">Email address</label>
+                <input name="PhotoPath" class="form-control" type="file">
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </fieldset>
+    </form>
+   
+</div>
