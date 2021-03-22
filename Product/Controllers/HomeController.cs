@@ -58,28 +58,48 @@ namespace Product.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public IActionResult Edit(int ProductId)
+
+        public IActionResult Edit(int id)
         {
 
-            var product = _repository.GetPrdouct(ProductId);
-            CreateProduct model = new CreateProduct()
+            var product = _repository.GetPrdouct(id);
+            EditProductViewModel model = new EditProductViewModel()
             {
                 ProductName = product.ProductName,
                 ProductDataTime = product.ProductDataTime,
-                //PhotoPath =product.PhotoPath
+                existingImage =product.PhotoPath
             };
             if (product!=null)
             {
                 return View(model);
             }
-            return View(_repository.GetProducts().ToList());
+            return View("Index",_repository.GetProducts().ToList());
         }
-        //[HttpPost]
-        //public IActionResult Edit(int ProductId)
-        //{
-        //    return View();
-        //}
-            public string uploadFile(CreateProduct product)
+        [HttpPost]
+        public IActionResult Edit(EditProductViewModel model)
+        {
+            var product = _repository.GetPrdouct(model.Id);
+            string uniqueFile;
+            if (product!=null)
+            {
+                product.ProductName = model.ProductName;
+                product.ProductDataTime = model.ProductDataTime;
+                uniqueFile = uploadFile(model);
+                if (model.PhotoPath != null)
+                {
+                    product.PhotoPath = uniqueFile;
+                }
+            }
+            if (model.existingImage != null)
+            {
+                //كده انا مسكت المسار بتاع الصوره
+                string filename = Path.Combine(_hostEnvironment.WebRootPath, "Image", model.existingImage);
+                System.IO.File.Delete(filename);
+            }
+            _repository.Edit(product);
+            return  RedirectToAction("index");
+        }
+        public string uploadFile(CreateProduct product)
         {
             string Uniquename = null;
             if (product.PhotoPath != null && product.PhotoPath.Count > 0)

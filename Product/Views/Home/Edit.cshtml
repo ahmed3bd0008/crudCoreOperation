@@ -2,7 +2,7 @@
     ViewData["Title"] = "Edit Product";
 }
 @*@inject CreateProduct product*@
-@model CreateProduct 
+@model EditProductViewModel 
 @{
    
 }
@@ -10,22 +10,26 @@
     <form enctype="multipart/form-data"  method="post">
         <fieldset>
             <legend>Add Product</legend>
+            <input type="hidden" asp-for="@Model.existingImage" />
+           
             <div class="form-group">
-                <label asp-for="@Model.ProductName" name="ProductName" >Email address </label>
-                <input name="ProductName" class="form-control" value="@ViewBag.product.ProductName">
+                <label asp-for="@Model.ProductName" name="ProductName">Email address </label>
+                <input name="ProductName" class="form-control" value="@Model.ProductName">
             </div>
             <div class="form-group">
                 <label asp-for="@Model.ProductDataTime" name="ProductDataTime">Email address</label>
-                <input asp-for="@Model.ProductDataTime" name="ProductDataTime" class="form-control " type="date" value="@ViewBag.product.ProductDataTime">
+                <input asp-for="@Model.ProductDataTime" class="form-control ">
             </div>
             <div class="form-group">
                 <label name="PhotoPath">Email address</label>
                 <input name="PhotoPath" class="form-control" type="file">
             </div>
 
+            <div class="form-group">
+                <img src="~/Image/@Model.existingImage" style="width:200px" />
+            </div>
 
-
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" asp-controller="Home" asp-action="Edit">Submit</button>
         </fieldset>
     </form>
    
